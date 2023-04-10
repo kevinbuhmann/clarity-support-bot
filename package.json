@@ -1,0 +1,13 @@
+{
+  "name": "clarity-support-bot",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "format": "prettier . --config ./prettier.json --write",
+    "deploy": "netlify deploy --prod"
+  },
+  "devDependencies": {
+    "netlify-cli": "13.2.2",
+    "prettier": "2.8.7"
+  }
+}
