@@ -6,6 +6,7 @@ export interface SlackMessageEvent {
   bot_id: string;
   ts: string;
   thread_ts?: string;
+  hidden?: boolean;
 }
 
 export type SlackEvent = SlackMessageEvent;
