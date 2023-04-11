@@ -4,12 +4,16 @@ import { SlackMessageEvent } from '../helpers/slack-types.ts';
 const { SLACK_TOKEN, SLACK_CHANNEL } = environment;
 
 export async function handleMessageEvent(event: SlackMessageEvent): Promise<Response> {
-  const messageIsNotFromBot = !event.bot_id;
-  const messageIsNotThreadReply = !event.thread_ts;
-  const messageIsInSupportChannel =
-    event.channel_type === 'channel' && event.channel === SLACK_CHANNEL;
-
-  if (messageIsNotFromBot && messageIsNotThreadReply && messageIsInSupportChannel) {
+  if (
+    // message is not a bot message
+    !event.bot_id &&
+    // message is not a thread reply
+    !event.thread_ts &&
+    // message is in channel
+    event.channel_type === 'channel' &&
+    // message is in correct channel
+    event.channel === SLACK_CHANNEL
+  ) {
     await postSupportReplyMessage(event);
   }
 
