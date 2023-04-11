@@ -5,6 +5,8 @@ const { SLACK_TOKEN, SLACK_CHANNEL } = environment;
 
 export async function handleMessageEvent(event: SlackMessageEvent): Promise<Response> {
   if (
+    // message is not a subtype (delete, edit, channel join, etc.)
+    !event.subtype &&
     // message is not a bot message
     !event.bot_id &&
     // message is not a thread reply
