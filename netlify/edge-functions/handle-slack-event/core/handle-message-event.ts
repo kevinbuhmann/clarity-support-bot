@@ -5,8 +5,6 @@ const { SLACK_TOKEN, SLACK_CHANNEL } = environment;
 
 export async function handleMessageEvent(event: SlackMessageEvent): Promise<Response> {
   if (
-    // message is not a subtype (delete, edit, channel join, etc.)
-    !event.subtype &&
     // message is not hidden
     !event.hidden &&
     // message is not a bot message
@@ -16,7 +14,9 @@ export async function handleMessageEvent(event: SlackMessageEvent): Promise<Resp
     // message is in channel
     event.channel_type === 'channel' &&
     // message is in correct channel
-    event.channel === SLACK_CHANNEL
+    event.channel === SLACK_CHANNEL &&
+    // message has whitelisted subtype (not delete, edit, channel join, etc.)
+    [undefined, 'file_share'].includes(event.subtype)
   ) {
     await postSupportReplyMessage(event);
   }
